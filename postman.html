@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+   <meta charset="UTF-8">
+   <head>
+      <title>Sample page</title>
+	   <link href="style.css" rel="stylesheet" />
+	     <script  type="text/javascript" src="jquery-3.6.0.min.js"></script>
+      <script>
+          var settings = {
+            "url": "https://api.onepeloton.com/api/browse_categories?library_type=on_demand",
+			"headers": "{ peloton_session_id: 'cb9b01975f56442a9eb8d139e0113e8c', peloton-platform: 'web' }",
+            "method": "GET",
+            "timeout": 0,
+          };
+		  
+/*		  var ajxReq = $.ajax( { url : 'https://api.onepeloton.com/api/browse_categories?library_type=on_demand',
+								contentType : 'application/json',
+								dataType : 'json',
+								headers: {"peloton_session_id": "cb9b01975f56442a9eb8d139e0113e8c"}
+							   });
+		  ajxReq.success( function ( data, status, jqXhr ) {
+			  $( '#p1' ).append( '<h3> Categories : </h3>');
+			  $( '#p1' ).append( '<p> Date : ' + data.date + '</p>');
+			  $( '#p1' ).append( '<p> Milliseconds_since_epoch : ' + data.milliseconds_since_epoch + '</p>');
+			  $( '#p1' ).append ('<p> Time: ' + data.time + '</p>');
+			  $( '#p1' ).append( '<p> The request status is : ' + status + '</p>');
+		  });*/
+
+
+		  
+          var settings2 = {
+            "url": "https://api.onepeloton.com/api/instructor?limit=100",
+            "method": "GET",
+            "timeout": 0,
+          };		  
+
+          $.ajax(settings).done(function (response) {
+            console.log(response);
+//			  var content = response.browse_categories.name;
+			  for(var i=0, keys=Object.keys(response.browse_categories), l=keys.length; i<l; i++) {
+                var nname = (response.browse_categories[i].name);
+				  var ele = document.createElement("option");
+				  ele.innerHTML = nname;
+				  document.getElementById("categories").appendChild(ele);
+//                $("#name").append(nname);
+              }
+          });
+		  
+          $.ajax(settings2).done(function (response) {
+            console.log(response);
+			  for(var i=0, keys=Object.keys(response.data), l=keys.length; i<l; i++) {
+                var nname = (response.data[i].name);
+				  var ele = document.createElement("option");
+				  ele.innerHTML = nname;
+				  document.getElementById("instructors").appendChild(ele);
+              }
+          });
+	   </script>
+   </head>
+   <body>
+      <h1>Sample Page</h1>
+      <!--<p>Categories: </p>-->
+      <div id="main">
+	    <div class="row">
+          <div class="col1">
+            <form id="form1" name="form1" method="post">
+              <label for="categories">Category:</label>
+              <select name="Categories" id="categories">
+                </select>
+            </form>
+          </div>
+            <div class="col2">
+            <form id="form2" name="form2" method="post">
+              <label for="instructors">Instructors:</label>
+              <select name="Instructors" id="instructors">
+                </select>
+            </form>
+          </div>
+        </div>
+   </div>
+   </body>
+</html>
