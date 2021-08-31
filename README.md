@@ -1,1 +1,1 @@
-# Peloton
+# Peloton web app
